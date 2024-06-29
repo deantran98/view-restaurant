@@ -1,0 +1,18 @@
+{
+  "files.eol": "\n",
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  "eslint.format.enable": true,
+  "[javascript][javascriptreact][typescript][typescriptreact]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    },
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "tailwindCSS.classAttributes": [
+    "classes",
+    "class",
+    "className",
+    "ngClass"
+  ]
+}
