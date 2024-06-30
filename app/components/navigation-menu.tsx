@@ -14,7 +14,7 @@ import {
   MENU_URL,
   MESSAGE_URL,
   VIEW_RESTAURANTS_URL,
-} from './share/route-url'
+} from '../share/route-url'
 import Link from 'next/link'
 
 type MenuItem = '홈' | '검색' | '피드' | '내 예약' | '메뉴'
