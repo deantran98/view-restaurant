@@ -4,6 +4,7 @@ import { RestaurantRecord } from '../api/restaurants/route'
 import Image from 'next/image'
 import { Stars02SVGIcon } from '@/public/svg-icons/stars-02-icon'
 import { StarSVGIcon } from '@/public/svg-icons/star-icon'
+import { FIRST_ELEMENT_INDEX } from '../share/constant'
 
 interface RestaurantRecordWrapperProps {
   restaurantRecord: RestaurantRecord
@@ -24,15 +25,16 @@ const RestaurantRecordWrapper: React.FC<RestaurantRecordWrapperProps> = ({
   } = restaurantRecord
 
   return (
-    <Card sx={{ maxWidth: 355 }}>
-      <div style={{ position: 'relative', width: '100%', height: '140px' }}>
+    <Card sx={{ maxWidth: 355, borderRadius: '16px' }}>
+      <div style={{ position: 'relative', width: '100%', height: '200px' }}>
         <Image
-          src={images[0]}
+          src={images[FIRST_ELEMENT_INDEX]}
           alt={`Image of ${name}`}
-          layout="fill"
-          objectFit="cover"
+          fill
+          priority
         />
       </div>
+
       <CardContent>
         <Typography gutterBottom variant="body2" color="#FF692E">
           {featured.icon === 'stars-02' ? (

@@ -1,7 +1,7 @@
 import { MOCK_RESTAURANTS_RESPONSE } from '@/mock/restaurants-response'
 import { NextResponse } from 'next/server'
 
-type RestaurantRecord = {
+export type RestaurantRecord = {
   rating: number
   rating_count: number
   category: string

@@ -41,6 +41,7 @@ const menuItemToPath: Record<MenuItem, string> = {
 
 const getIconForMenuItem = (itemName: MenuItem): JSX.Element | null => {
   const Icon = iconMapping[itemName]
+
   return Icon ? <Icon /> : null
 }
 

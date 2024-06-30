@@ -7,7 +7,7 @@ export default function Home() {
   const router = useRouter()
 
   useEffect(() => {
-    router.push('/view-restaurants')
+    router.push('/restaurants')
   }, [router])
 
   return null

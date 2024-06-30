@@ -1,0 +1,3 @@
+export const FIRST_ELEMENT_INDEX = 0
+
+export const RECORDS_PER_LOAD_AND_DISPLAY = 10
