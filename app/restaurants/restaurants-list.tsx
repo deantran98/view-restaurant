@@ -36,9 +36,9 @@ const RestaurantsList: React.FC<RestaurantsListProps> = ({
     })
   }, [debouncedSearchQuery, restaurantRecords])
 
-  // Update visible 10 records initially and on search query change
+  // Update visible 6 records initially and on search query change
   useEffect(() => {
-    setVisibleRecords(filteredRecords.slice(0, 10))
+    setVisibleRecords(filteredRecords.slice(0, 6))
   }, [filteredRecords])
 
   // IntersectionObserver for lazy loading
