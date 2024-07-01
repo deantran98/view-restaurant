@@ -5,7 +5,11 @@ import { RestaurantRecord } from '../api/restaurants/route'
 import RestaurantRecordWrapper from '../components/record-wrapper'
 import { Toolbar, TextField, InputAdornment } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
-import { RECORDS_PER_LOAD_AND_DISPLAY } from '../share/constant'
+import {
+  FIRST_ELEMENT_INDEX,
+  RECORDS_PER_LOAD_AND_DISPLAY,
+  THREE_SECOND_IN_MILLISECONDS,
+} from '../share/constant'
 
 interface RestaurantsListProps {
   restaurantRecords: RestaurantRecord[]
@@ -15,21 +19,24 @@ const RestaurantsList: React.FC<RestaurantsListProps> = ({
   restaurantRecords,
 }) => {
   const [searchQuery, setSearchQuery] = useState('')
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState(searchQuery)
+  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null)
+
   const [visibleRecords, setVisibleRecords] = useState<RestaurantRecord[]>([])
   const loadMoreRef = useRef(null)
 
   // Memoize filtered records to prevent unnecessary recalculations
   const filteredRecords = useMemo(() => {
     return restaurantRecords.filter((item) => {
-      const searchLower = searchQuery.toLowerCase()
+      const searchLower = debouncedSearchQuery.toLowerCase()
       const nameMatch = item.name.toLowerCase().includes(searchLower)
       const ratingMatch = item.rating.toString().includes(searchLower)
 
       return nameMatch || ratingMatch
     })
-  }, [searchQuery, restaurantRecords])
+  }, [debouncedSearchQuery, restaurantRecords])
 
-  // Update visible records initially and on search query change
+  // Update visible 10 records initially and on search query change
   useEffect(() => {
     setVisibleRecords(filteredRecords.slice(0, 10))
   }, [filteredRecords])
@@ -38,7 +45,7 @@ const RestaurantsList: React.FC<RestaurantsListProps> = ({
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting) {
+        if (entries[FIRST_ELEMENT_INDEX].isIntersecting) {
           setVisibleRecords((prevRecords) => {
             const nextRecords = filteredRecords.slice(
               prevRecords.length,
@@ -56,6 +63,22 @@ const RestaurantsList: React.FC<RestaurantsListProps> = ({
     return () => observer.disconnect()
   }, [filteredRecords])
 
+  const onSearchChange = (e: any) => {
+    const searchTerm = e.target.value
+
+    setSearchQuery(searchTerm)
+
+    if (timeoutId) {
+      clearTimeout(timeoutId)
+    }
+
+    const newTimeoutId = setTimeout(() => {
+      setDebouncedSearchQuery(searchTerm)
+    }, THREE_SECOND_IN_MILLISECONDS)
+
+    setTimeoutId(newTimeoutId)
+  }
+
   return (
     <div className="flex flex-col">
       <div className="sticky top-0 z-10 mt-4 bg-white md:px-8">
@@ -64,7 +87,7 @@ const RestaurantsList: React.FC<RestaurantsListProps> = ({
             variant="outlined"
             fullWidth
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={onSearchChange}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
