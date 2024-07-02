@@ -1,4 +1,19 @@
-import { RestaurantRecord } from '@/app/api/restaurants/route'
+export type RestaurantRecord = {
+  rating: number
+  rating_count: number
+  category: string
+  city: string
+  desc: string
+  id: string
+  images: string[]
+  name: string
+  price_range: string
+  featured: {
+    text: string
+    icon: string
+  }
+  isFavorite: boolean
+}
 
 export function mapDBResponseToRestaurantRecords(
   dbResponse: any[] | undefined

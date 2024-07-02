@@ -1,10 +1,15 @@
+'use client'
+
 import React from 'react'
 import { Card, CardContent, Tooltip, Typography } from '@mui/material'
-import { RestaurantRecord } from '../api/restaurants/route'
 import Image from 'next/image'
 import { Stars02SVGIcon } from '@/public/svg-icons/stars-02-icon'
 import { StarSVGIcon } from '@/public/svg-icons/star-icon'
 import { FIRST_ELEMENT_INDEX } from '../share/constant'
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
+import { trpc } from '@/utils/trpc'
+import queryClient from '@/utils/query-client'
+import { RestaurantRecord } from '@/lib/db-service'
 
 interface RestaurantRecordWrapperProps {
   restaurantRecord: RestaurantRecord
@@ -24,9 +29,42 @@ const RestaurantRecordWrapper: React.FC<RestaurantRecordWrapperProps> = ({
     isFavorite,
   } = restaurantRecord
 
+  const { mutate } = trpc.addFavorite.useMutation({
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: [['getRestaurants'], { type: 'query' }],
+      })
+    },
+  })
+
+  const onClickAddFavorite = async () => {
+    mutate({ id: restaurantRecord.id, isFavorite: !isFavorite })
+  }
+
   return (
     <Card sx={{ maxWidth: 355, borderRadius: '16px' }}>
       <div style={{ position: 'relative', width: '100%', height: '200px' }}>
+        <div
+          style={{
+            position: 'absolute',
+            top: '9px',
+            right: '9px',
+            zIndex: 1,
+            backgroundColor: isFavorite ? 'red' : 'lightgray',
+            borderRadius: '50%',
+            width: '35px',
+            height: '35px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            opacity: 0.8,
+          }}
+        >
+          <FavoriteBorderIcon
+            style={{ color: isFavorite ? 'pink' : 'white', cursor: 'pointer' }} // Add cursor style for visual feedback
+            onClick={onClickAddFavorite}
+          />
+        </div>
         <Image
           src={images[FIRST_ELEMENT_INDEX]}
           alt={`Image of ${name}`}
