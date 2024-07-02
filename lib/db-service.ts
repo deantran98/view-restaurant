@@ -1,8 +1,12 @@
 import { RestaurantRecord } from '@/app/api/restaurants/route'
 
 export function mapDBResponseToRestaurantRecords(
-  dbResponse: any[]
+  dbResponse: any[] | undefined
 ): RestaurantRecord[] {
+  if (!dbResponse) {
+    return []
+  }
+
   return dbResponse.map((restaurant: any) => ({
     id: restaurant.id,
     name: restaurant.name,

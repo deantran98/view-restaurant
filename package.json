@@ -14,9 +14,16 @@
     "@mui/icons-material": "^5.15.18",
     "@mui/material": "^5.15.18",
     "@prisma/client": "^5.16.1",
+    "@tanstack/react-query": "^4.18.0",
+    "@tanstack/react-query-devtools": "4.18.0",
+    "@trpc/client": "^10.45.0",
+    "@trpc/react-query": "10.45.0",
+    "@trpc/server": "^10.45.0",
     "next": "14.2.4",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "superjson": "^2.2.1",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/node": "^20",
