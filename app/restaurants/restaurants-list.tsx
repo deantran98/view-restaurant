@@ -85,6 +85,7 @@ const RestaurantsList: React.FC<RestaurantsListProps> = ({
         <Toolbar>
           <TextField
             variant="outlined"
+            placeholder="맛집 이름을 검색해보세요"
             fullWidth
             value={searchQuery}
             onChange={onSearchChange}
