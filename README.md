@@ -59,11 +59,15 @@ This project uses Next.js, which allows for both server-side rendering (SSR) and
 To get the project up and running on your local machine, follow these steps:
 
 1. **Clone the repo to your local and checkout the main branch**:
+  ```bash
   git clone https://github.com/deantran98/view-restaurant.git
   cd view-restaurant
   git checkout main
+  ```
 2. **Build and run the application using Docker Compose as described in README.Docker.md**:
+  ```bash
   docker compose up --build
+  ```
 3. **Install Dependencies**:
   ```bash
   npm install
@@ -71,6 +75,7 @@ To get the project up and running on your local machine, follow these steps:
   yarn install
   # or
   pnpm install
+  ```
 4. **Run the Development Server**:
   ```bash
   npm run dev
@@ -78,5 +83,7 @@ To get the project up and running on your local machine, follow these steps:
   yarn dev
   # or
   pnpm dev
+  ```
 5. **Add mock data locally to Prisma Studio**:
+  ```bash
   npx prisma studio
